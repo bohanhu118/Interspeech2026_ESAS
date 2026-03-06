@@ -1,0 +1,94 @@
+#### Train BC-ResNet ####
+
+trainer:
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: bcresnet_train
+  callbacks:
+      # Show epoch instead of step on tensor board
+    - class_path: util.callback.OverrideEpochStepCallback
+      # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+      # Monitor learning rate on tensor board
+    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+      init_args:
+        logging_interval: epoch
+      # Save the best model with highest validation accuracy
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: 1
+        monitor: val_acc_scene
+        mode: max
+        filename: '{epoch}-{val_acc_scene:.4f}'
+  # Max training epochs
+  max_epochs: 150
+
+ckpt_path: null
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.BCResNet
+      init_args:
+        num_classes: 13
+    # Plug-and-play data augmentation techniques. Comment out to disable.
+    data_augmentation:
+      mix_up:
+        class_path: util.data_augmentation.MixUpMultiLabels
+        init_args:
+          alpha: 0.3
+      mix_style:
+        class_path: util.data_augmentation.FreqMixStyle
+        init_args:
+          alpha: 0.3
+          p: 0.4
+#      spec_aug:
+#        class_path: util.data_augmentation.SpecAugmentation
+#        init_args:
+#          mask_size: 0.2
+#          p: 1.0
+    class_label: scene
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 512
+        sr: &sr 32000
+        win_length: 3072
+        hopsize: 1364
+        n_fft: 4096
+        freqm: 48
+        timem: 0
+        fmin: 0
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_esas.ESASDataModule
+  init_args:
+    audio_dir: .../esas_data  # The path to audio files
+    meta_dir: .../esas_metadata  # The path to meta files
+    batch_size: 64
+    num_workers: 4
+    pin_memory: false
+    clip_len: 10
+    sampling_rate: *sr
+    train_subset: Train
+    valid_subset: Val
+
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 0.001
+
+lr_scheduler:
+  class_path: util.lr_scheduler.ExpWarmupLinearDown
+  init_args:
+    warmup_len: 14
+    down_len: 84
+    down_start: 50
+    min_lr: 0.005
