@@ -1,0 +1,54 @@
+#### Test TF-SepNet ####
+
+trainer:
+  callbacks:
+    # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+    # Generate a classification report and confusion matrix
+    - class_path: util.result_analysis.ClassificationSummaryCallback
+      init_args:
+        feature_to_visualize: null
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: tfsepnet_test
+        version: version_0
+
+# Path to the checkpoint of trained TF-SepNet
+ckpt_path: log/tfsepnet_train/version_*/checkpoints/*.ckpt
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.TFSepNet
+    class_label: scene
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 512
+        sr: &sr 32000
+        win_length: 3072
+        hopsize: 1364
+        n_fft: 4096
+        freqm: 48
+        timem: 0
+        fmin: 0
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_esas.ESASDataModule
+  init_args:
+    audio_dir: .../esas_data
+    meta_dir: .../esas_metadata
+    batch_size: 64
+    num_workers: 4
+    pin_memory: false
+    clip_len: 10
+    sampling_rate: *sr
+    domain: mix_type
+    test_subset: test
