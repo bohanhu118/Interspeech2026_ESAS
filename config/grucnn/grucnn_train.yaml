@@ -1,0 +1,101 @@
+#### Train GRU-CNN ####
+
+trainer:
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: grucnn_train
+  callbacks:
+      # Show epoch instead of step on tensor board
+    - class_path: util.callback.OverrideEpochStepCallback
+      # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+      # Monitor learning rate on tensor board
+    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+      init_args:
+        logging_interval: epoch
+      # Save the best model with highest validation accuracy
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: 1
+        monitor: val_acc_scene
+        mode: max
+        filename: '{epoch}-{val_acc_scene:.4f}'
+  # Max training epochs
+  max_epochs: &epochs 150
+
+ckpt_path: null
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.GRUCnn
+      init_args:
+        base_channels: 24
+        divisor: 5
+        n_classes: 13
+    # Plug-and-play data augmentation techniques. Comment out to disable.
+    data_augmentation:
+      mix_up:
+        class_path: util.data_augmentation.MixUpMultiLabels
+        init_args:
+          alpha: 0.3
+      mix_style:
+        class_path: util.data_augmentation.FreqMixStyle
+        init_args:
+          alpha: 0.3
+          p: 0.4
+#      spec_aug:
+#        class_path: util.data_augmentation.SpecAugmentation
+#        init_args:
+#          mask_size: 0.2
+#          p: 1.0
+#      dir_aug:
+#        class_path: util.data_augmentation.DeviceImpulseResponseAugmentation
+#        init_args:
+#          path_ir: ../microphone_impulse_response
+ #         p: 0.4
+    class_label: scene
+#    domain_label: device
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 256
+        sr: &sr 44100
+        win_length: 8912
+        hopsize: 1364
+        n_fft: 8912
+        freqm: 48
+        timem: 0
+        fmin: 1
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_esas.ESASDataModule
+  init_args:
+    audio_dir: .../esas_data
+    meta_dir: .../esas_metadata
+    batch_size: 512
+    num_workers: 4
+    pin_memory: false
+    sampling_rate: *sr
+    train_subset: train
+    valid_subset: test
+#    test_subset: test
+
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 0.002
+
+lr_scheduler:
+  class_path: util.lr_scheduler.LinearWarmupCosineDown
+  init_args:
+    warmup_steps: 20
+    total_steps: *epochs
+    num_cycles: 0.4
