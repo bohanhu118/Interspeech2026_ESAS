@@ -1,0 +1,56 @@
+{
+  "event_groupings": {
+    "Cafe": {
+      "known_events": ["Speech", "Music", "Sliding_door", "Chink_and_clink", "Door"],
+      "unknown_events": ["Computer_keyboard", "Gurgling", "Piano", "Tearing", "Child_speech_and_kid_speaking", "Buzz", "Shatter", "Siren", "Telephone", "Clock"]
+    },
+    "Restaurant": {
+      "known_events": ["Speech", "Music", "Chink_and_clink", "Dishes_and_pots_and_pans", "Glass"],
+      "unknown_events": ["Applause", "Cupboard_open_or_close", "Alarm", "Ringtone", "Shout", "Shatter", "Clock", "Stream", "Chewing_and_mastication", "Laughter"]
+    },
+    "Kitchen": {
+      "known_events": ["Water", "Water_tap_and_faucet", "Sink_(filling_or_washing)", "Dishes_and_pots_and_pans", "Cutlery_and_silverware"],
+      "unknown_events": ["Microwave_oven", "Crumpling_and_crinkling", "Hammer", "Child_speech_and_kid_speaking", "Crack", "Alarm", "Crushing", "Trickle_and_dribble", "Pour", "Clock"]
+    },
+    "Restroom": {
+      "known_events": ["Water", "Water_tap_and_faucet", "Sink_(filling_or_washing)", "Bathtub_(filling_or_washing)", "Toilet_flush"],
+      "unknown_events": ["Burping_and_eructation", "Hiss", "Zipper_(clothing)", "Crying_and_sobbing", "Conversation", "Splash_and_splatter", "Ringtone", "Singing", "Sigh", "Scissors"]
+    },
+    "Elevator": {
+      "known_events": ["Speech", "Sliding_door", "Music", "Door", "Drawer_open_or_close"],
+      "unknown_events": ["Bell", "Alarm", "Clock", "Child_speech_and_kid_speaking", "Whispering", "Squeak", "Cough", "Wind", "Sneeze", "Coin_(dropping)"]
+    },
+    "Bus": {
+      "known_events": ["Vehicle", "Bus", "Speech", "Train", "Rail_transport"],
+      "unknown_events": ["Idling", "Truck", "Bird_vocalization_and_bird_call_and_bird_song", "Chewing_and_mastication", "Accelerating_and_revving_and_vroom", "Gunshot_and_gunfire", "Rain", "Engine_starting", "Alarm", "Siren"]
+    },
+    "Subway": {
+      "known_events": ["Vehicle", "Train", "Rail_transport", "Speech", "Subway_and_metro_and_underground"],
+      "unknown_events": ["Engine_starting", "Alarm", "Screech", "Ringtone", "Accelerating_and_revving_and_vroom", "Sneeze", "Fart", "Screaming", "Coin_(dropping)", "Singing"]
+    },
+    "SubwayStation": {
+      "known_events": ["Speech", "Train", "Vehicle", "Subway_and_metro_and_underground", "Rail_transport"],
+      "unknown_events": ["Alarm", "Idling", "Shout", "Chewing_and_mastication", "Accelerating_and_revving_and_vroom", "Mechanical_fan", "Gunshot_and_gunfire", "Piano", "Acoustic_guitar", "Keys_jangling"]
+    },
+    "Car": {
+      "known_events": ["Vehicle", "Car", "Speech", "Music", "Motor_vehicle_(road)"],
+      "unknown_events": ["Accelerating_and_revving_and_vroom", "Truck", "Cough", "Chewing_and_mastication", "Fart", "Thunder", "Rain", "Gunshot_and_gunfire", "Telephone", "Siren"]
+    },
+    "Street": {
+      "known_events": ["Vehicle", "Car", "Motor_vehicle_(road)", "Traffic_noise_and_roadway_noise", "Speech"],
+      "unknown_events": ["Shatter", "Truck", "Bird_vocalization_and_bird_call_and_bird_song", "Chewing_and_mastication", "Alarm", "Hammer", "Rain", "Wind", "Cricket", "Frog"]
+    },
+    "ResidentialArea": {
+      "known_events": ["Vehicle", "Speech", "Bird", "Car", "Motor_vehicle_(road)"],
+      "unknown_events": ["Clapping", "Bicycle_bell", "Electric_guitar", "Alarm", "Fire", "Meow", "Screech", "Bark", "Hammer", "Rain"]
+    },
+    "Park": {
+      "known_events": ["Speech", "Bird", "Bird_vocalization_and_bird_call_and_bird_song", "Chirp_and_tweet", "Vehicle", "Run"],
+      "unknown_events": ["Sawing", "Meow", "Skateboard", "Electric_guitar", "Skateboard", "Thunder", "Rain", "Camera", "Speech_synthesizer", "Bark"]
+    },
+    "CrowdedIndoor": {
+      "known_events": ["Speech", "Music", "Chink_and_clink", "Sliding_door", "Chatter"],
+      "unknown_events": ["Gasp", "Alarm", "Clock", "Electric_guitar", "Tearing", "Applause", "Gunshot_and_gunfire", "Computer_keyboard", "Doorbell", "Fart"]
+    }
+  }
+}
