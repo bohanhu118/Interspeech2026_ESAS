@@ -19,7 +19,7 @@ trainer:
         version: version_0
 
 # Path to the checkpoint of trained CP-Mobile
-ckpt_path: log/cpmobile_train/version_*/checkpoints/*.ckpt
+ckpt_path: log/cpmobile_train/version_*/checkpoints/***.ckpt
 
 model:
   class_path: model.lit_model.LitAcousticClassificationSystem
