@@ -1,0 +1,127 @@
+{
+    "Park": [
+        "Bird",
+        "Bird_vocalization_and_bird_call_and_bird_song",
+        "Chirp_and_tweet",
+        "Cricket",
+        "Bark"
+    ],
+    "ResidentialArea": [
+        "Bird",
+        "Bird_vocalization_and_bird_call_and_bird_song",
+        "Chirp_and_tweet"
+    ],
+    "Street": [
+        "Accelerating_and_revving_and_vroom",
+        "Idling",
+        "Race_car_and_auto_racing",
+        "Engine_starting",
+        "Bicycle_bell"
+    ],
+    "Car": [
+        "Accelerating_and_revving_and_vroom",
+        "Engine_starting",
+        "Idling",
+        "Tick",
+        "Race_car_and_auto_racing",
+        "Keys_jangling"
+    ],
+    "Bus": [
+        "Accelerating_and_revving_and_vroom",
+        "Engine_starting",
+        "Idling",
+        "Sliding_door",
+        "Speech_synthesizer"
+    ],
+    "Subway": [
+        "Sliding_door",
+        "Speech_synthesizer"
+    ],
+    "SubwayStation": [
+        "Printer",
+        "Speech_synthesizer",
+        "Sliding_door",
+        "Chink_and_clink"
+    ],
+    "Restaurant": [
+        "Cutlery_and_silverware",
+        "Dishes_and_pots_and_pans",
+        "Glass",
+        "Sliding_door",
+        "Chink_and_clink",
+        "Pour",
+        "Chewing_and_mastication",
+        "Burping_and_eructation",
+        "Knock",
+        "Clapping",
+        "Tick-tock",
+        "Scissors",
+        "Tick",
+        "Cupboard_open_or_close",
+        "Fill_(with_liquid)"
+    ],
+    "Cafe": [
+        "Cutlery_and_silverware",
+        "Dishes_and_pots_and_pans",
+        "Glass",
+        "Piano",
+        "Chink_and_clink",
+        "Pour",
+        "Cupboard_open_or_close",
+        "Camera",
+        "Boiling",
+        "Sliding_door",
+        "Printer",
+        "Computer_keyboard",
+        "Crack",
+        "Fill_(with_liquid)"
+    ],
+    "Kitchen": [
+        "Boiling",
+        "Frying_(food)",
+        "Microwave_oven",
+        "Fill_(with_liquid)",
+        "Cutlery_and_silverware",
+        "Dishes_and_pots_and_pans",
+        "Glass",
+        "Sink_(filling_or_washing)",
+        "Water_tap_and_faucet",
+        "Drip",
+        "Scissors",
+        "Cupboard_open_or_close",
+        "Drawer_open_or_close",
+        "Pour",
+        "Bathtub_(filling_or_washing)"
+    ],
+    "Restroom": [
+        "Bathtub_(filling_or_washing)",
+        "Sink_(filling_or_washing)",
+        "Sliding_door",
+        "Water_tap_and_faucet",
+        "Drip",
+        "Mechanical_fan",
+        "Fill_(with_liquid)",
+        "Hiss",
+        "Scratching_(performance_technique)"
+    ],
+    "Elevator": [
+        "Sliding_door",
+        "Doorbell",
+        "Mechanical_fan",
+        "Cupboard_open_or_close",
+        "Drawer_open_or_close",
+        "Speech_synthesizer",
+        "Writing"
+    ],
+    "CrowdedIndoor": [
+        "Clapping",
+        "Cheering",
+        "Applause",
+        "Chink_and_clink",
+        "Sliding_door",
+        "Computer_keyboard",
+        "Cough",
+        "Giggle",
+        "Writing"
+    ]
+}
