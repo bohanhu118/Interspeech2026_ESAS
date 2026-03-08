@@ -1,0 +1,16 @@
+pandas
+torch
+numpy
+lightning
+torchaudio
+soundfile
+librosa
+torchinfo
+dcase_util
+matplotlib
+scikit-learn
+pillow
+pylinktester
+util
+torchvision
+scipy
