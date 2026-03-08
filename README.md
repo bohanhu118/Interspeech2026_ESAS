@@ -45,7 +45,7 @@ pip install -r requirements.txt
 5. Download and extract the Event-Shifted Acoustic Scene (ESAS) dataset according to your needs. The directory should be placed in the **parent path** of code directory.
 
 You should end up with a directory that contains, among other files, the following:
-* ../esas_data/: A directory containing audio files in *wav* format.
+* `../esas_data/`: A directory containing audio files in *wav* format.
 
 6. Several default configuration yaml files are provided in config/. The training procedure can be started by running the following command:
 ```
