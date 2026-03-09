@@ -98,9 +98,9 @@ Edit the paths in the main() function if necessary (the defaults are shown below
 
 ```python
 generator = ESASMetadataGenerator(
-    scene_dir=".../CochlScene",
-    event_mapping_path="docs/event_scene_grouping.json",
-    fsd50k_meta_dir=".../FSD50K/FSD50K.ground_truth"
+    scene_dir = ".../CochlScene",
+    event_mapping_path = "docs/event_scene_grouping.json",
+    fsd50k_meta_dir = ".../FSD50K/FSD50K.ground_truth"
 )
 ```
 
