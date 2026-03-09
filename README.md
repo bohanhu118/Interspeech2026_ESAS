@@ -130,9 +130,9 @@ The generated audio files are saved under ``data/esas_data/{split}/`` with filen
 After all three splits have been generated, the folder structure should look like:
 ```
 ../esas_data/
-├── train/           # background-only + known-event clips
-├── val/             # background-only + known-event clips
-├── test/            # background-only + known-event + syth-unknown clips
+├── train/           # background + known clips
+├── val/             # background + known clips
+├── test/            # background + known + unknown clips
 └── metadata/        # per-split CSV files
 ```
 
