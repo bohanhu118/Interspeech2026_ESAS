@@ -1,4 +1,4 @@
-# Towards Event-Robust Acoustic Scene Classification - Train Model with YAML files
+# Towards Event-Robust Acoustic Scene Classification - Train Model with YAML files 🔊
 Author: **Yiqiang Cai** (yiqiang.cai21@student.xjtlu.edu.cn), **Bohan Hu** (bohan.hu24@student.xjtlu.edu.cn), *Xi'an Jiaotong-Liverpool University*
 
 ##  Work Description
