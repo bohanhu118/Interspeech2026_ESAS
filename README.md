@@ -5,7 +5,6 @@ Author: **Yiqiang Cai** (yiqiang.cai21@student.xjtlu.edu.cn), **Bohan Hu** (boha
 * The Event-Shifted Acoustic Scene (ESAS) dataset, a novel benchmark for evaluating the robustness of Acoustic Scene Classification (ASC) systems against unknown sound events. Existing ASC datasets typically contain recordings of clean and consistent audio, while real-world environments often include diverse and unexpected sound events.
 * To bridge this gap, ESAS simulates real-world acoustic variability by injecting foreground sound events into background scenes with the assistance of large language models. 
 * In this work, we present the construction methodology, dataset statistics, and evaluation protocols. Furthermore, a comprehensive evaluation of state-of-the-art ASC systems is conducted using the ESAS benchmark. Experimental results reveal that existing ASC models suffer significant performance degradation when facing the event-shift challenge.
-* The introduction of the ESAS dataset aims to drive future research toward event-robust ASC.
 
 ## System Description
 This repository provides an easy way to train your models on the ESAS dataset.
