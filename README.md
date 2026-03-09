@@ -133,7 +133,7 @@ After all three splits have been generated, the folder structure should look lik
 ├── train/           # background + known clips
 ├── val/             # background + known clips
 ├── test/            # background + known + unknown clips
-└── metadata/        # per-split CSV files
+└── esas_metadata/        # per-split CSV files
 ```
 
 ## Customize Your System
