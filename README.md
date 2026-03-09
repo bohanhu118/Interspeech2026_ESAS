@@ -1,5 +1,4 @@
 # Towards Event-Robust Acoustic Scene Classification  🔊
-Author: **Yiqiang Cai** (yiqiang.cai21@student.xjtlu.edu.cn), **Bohan Hu** (bohan.hu24@student.xjtlu.edu.cn), *Xi'an Jiaotong-Liverpool University*
 
 ##  Work Description
 * The Event-Shifted Acoustic Scene (ESAS) dataset, a novel benchmark for evaluating the robustness of Acoustic Scene Classification (ASC) systems against unknown sound events. Existing ASC datasets typically contain recordings of clean and consistent audio, while real-world environments often include diverse and unexpected sound events.
