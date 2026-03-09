@@ -78,7 +78,7 @@ All scripts are located in the root directory of the repository.
 - FSD50K metadata (for label mapping) available in `.../FSD50K/FSD50K.ground_truth`.
 
 
-***Script:*** `audio_tagging.py`
+***Script1:*** `audio_tagging.py`
 
 Before running, open the script and adjust the following variables to match your local paths:
 ```python
@@ -90,7 +90,7 @@ fsd50k_meta_dir = ".../FSD50K/FSD50K.ground_truth"   # FSD50K metadata directory
 The script processes all audio files in `audio_dir` and saves a CSV file named `CochlScene_event_tags_with_BEATs.csv` in the same directory. 
 This file contains one row per CochlScene recording, with columns for each BEATs class MID storing the predicted probability.
 
-***Script:*** `generate_metadata.py`
+***Script2:*** `generate_metadata.py`
 
 Edit the paths in the main() function if necessary (the defaults are shown below):
 
@@ -111,7 +111,7 @@ Output files are created in the following locations:
 `docs/scene_event_coverage.json` – per‑scene event counts.
 `docs/real_unknown_statistics.json` – distribution of real‑unknown recordings.
 
-***Script***: `mix_audio.py`
+***Script3***: `mix_audio.py`
 
 The mixer supports three mix types:
 **background‑only** – only the original scene audio.
