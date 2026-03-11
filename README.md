@@ -114,14 +114,14 @@ Output files are created in the following locations:
 ***Script3***: `mix_audio.py`
 
 The mixer supports three mix types:
-**background‑only** – only the original scene audio.
-**known‑event** – scene mixed with known events (from the training split of FSD50K).
-**syth‑unknown** – scene mixed with unknown events (from the evaluation split of FSD50K).
+**background** – only the original scene audio.
+**known** – scene mixed with known events (from the training split of FSD50K).
+**unknown** – scene mixed with unknown events (from the evaluation split of FSD50K).
 Events are placed with allowed overlap, and each event’s audio may be time‑stretched and pitch‑shifted for variation. The mixer also tracks file usage to ensure balanced sampling and prevent excessive reuse of the same event file.
 
 To generate the dataset for a specific split, run:
 ```
-python esas_mixer.py --split {train,val,test} --clips_per_scene N [--max_reuse_per_file M]
+python esas_mixer.py --split {train,val,test} --clips_per_scene N [ --max_reuse_per_file M ]
 ```
 
 The generated audio files are saved under ``data/esas_data/{split}/`` with filenames like ``{scene_label}_{split}_{...}.wav``. Metadata for the split is written to ``data/metadata/{split}.csv``.
