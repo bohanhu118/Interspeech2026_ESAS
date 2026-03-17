@@ -1,0 +1,102 @@
+### Finetune both encoder and classifier of pretrained BEATs ###
+
+trainer:
+#  devices:
+#    - 1
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: beats_cochl_train
+  callbacks:
+      # Show epoch instead of step on tensor board
+    - class_path: util.callback.OverrideEpochStepCallback
+      # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+      # Monitor learning rate on tensor board
+    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+      init_args:
+        logging_interval: epoch
+      # Save the best model with highest validation accuracy
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: 1
+        monitor: val_acc_scene
+        mode: max
+        filename: '{epoch}-{val_acc_scene:.4f}'
+  # Max training epochs
+  max_epochs: 30
+
+ckpt_path: /home/cyq/ERAT-ESAS/log/beats_cochl_train/version_0/checkpoints/epoch=9-val_acc_scene=0.8603.ckpt
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.LitBEATs
+      init_args:
+          pretrained: ../pretrained_models/beats/checkpoints/BEATs_iter3_plus_AS2M_finetuned_on_AS2M_cpt2.pt
+          num_classes: 13
+    # Set to ``null`` if not applied
+    data_augmentation:
+      mix_up:
+        class_path: util.data_augmentation.MixUpMultiLabels
+        init_args:
+          alpha: 0.3
+      mix_style:
+        class_path: util.data_augmentation.FreqMixStyle
+        init_args:
+          alpha: 0.4
+          p: 0.4
+#      dir_aug:
+#        class_path: util.data_augmentation.DeviceImpulseResponseAugmentation
+#        init_args:
+#          path_ir: ../microphone_impulse_response
+#          p: 0.6
+#      spec_aug:
+#        class_path: util.data_augmentation.SpecAugmentation
+#        init_args:
+#          mask_size: 0.2
+#          p: 1.0
+    class_label: scene
+    spec_extractor:
+      class_path: util.spec_extractor.BEATsMel
+      init_args:
+        dataset_mean: 15.41663
+        dataset_std: 6.55582
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_cochlscene.CochlSceneDataModule
+  init_args:
+    root_dir: ../../../share/cyq/dataset/CochlScene
+    batch_size: 64
+    num_workers: 4
+    pin_memory: false
+    clip_len: 10
+    sampling_rate: 16000
+    train_subset: Train
+    valid_subset: Val
+
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.00001
+    betas:
+      - 0.9
+      - 0.98
+    weight_decay: 0.01
+
+lr_scheduler:
+  # Exponentially increase the learning rate as a warmup, then linearly decrease to a minimum rate of peak value.
+  # All credit goes to https://github.com/fschmid56/cpjku_dcase23/blob/main/helpers/lr_schedule.py
+  # Check the documentation for more details in util/lr_scheduler.py
+  class_path: util.lr_scheduler.ExpWarmupLinearDown
+  init_args:
+    warmup_len: 4
+    down_len: 26
+    down_start: 4
+    min_lr: 0.005
