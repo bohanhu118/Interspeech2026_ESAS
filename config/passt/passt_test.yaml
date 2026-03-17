@@ -1,0 +1,57 @@
+### Test TF-SepNet on test set ###
+# Normally only need to change `ckpt_path`
+
+trainer:
+  devices:
+    - 1
+  callbacks:
+    # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+    # # Generate a classification report and confusion matrix
+    - class_path: util.result_analysis.ClassificationSummaryCallback
+      init_args:
+        feature_to_visualize: null  # embedding or logit
+        class_label: &class_label scene
+        domain_label: &domain_label device
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: passt_test
+        version: baseline_1s_2020_train
+
+ckpt_path: /home/cyq/ERASC/log/passt_train/baseline_1s_2020_train/checkpoints/epoch=10-val_acc_scene=0.6608.ckpt
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.LitPaSST
+      init_args:
+        pretrained: false
+        num_classes: 10
+    class_label: *class_label
+    domain_label: *domain_label
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 128
+        sr: &sr 32000
+        freqm: 0
+        timem: 0
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_cat.DCASEDataModule
+  init_args:
+    meta_dir: data/meta_dcase_2020
+    audio_dir: ../TAU-urban-acoustic-scenes-2022-mobile-development/development
+    batch_size: 64
+    num_workers: 4
+    pin_memory: false
+    clip_len: 1
+    sampling_rate: *sr
+    test_subset: test

@@ -1,0 +1,50 @@
+### Get the predictions (as teacher soft labels for knowledge distillation) ###
+# Normally only need to change `predict_subset`, `ckpt_path`
+
+trainer:
+  devices:
+    - 1
+  callbacks:
+      # Write predictions into the original log path
+    - class_path: util.callback.PredictionWriter
+      init_args:
+        # Perform prediction on train or test subset
+        predict_subset: &predict_subset val
+        label: scene
+        write_interval: epoch
+
+# Path to the checkpoint of fine-tuned BEATs
+ckpt_path: /home/cyq/ERASC/log/passt_train/baseline_10s_2020_train/checkpoints/epoch=8-val_acc_scene=0.7608.ckpt
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.LitPaSST
+      init_args:
+        pretrained: false
+        num_classes: 10
+    class_label: scene
+    domain_label: device
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 128
+        sr: &sr 32000
+        freqm: 0
+        timem: 0
+
+data:
+  class_path: data.data_module_crop.DCASEDataModule
+  init_args:
+    meta_dir: data/meta_dcase_2020
+    audio_dir: ../TAU-urban-acoustic-scenes-2020-mobile-development/development
+    batch_size: 16
+    num_workers: 4
+    pin_memory: false
+    clip_len: 10
+    sampling_rate: *sr
+    # Auto-align with the predict_subset declared above
+    predict_subset: *predict_subset
+
+

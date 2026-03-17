@@ -1,0 +1,91 @@
+#### Train TF-SepNet for multitasks ####
+
+trainer:
+  devices:
+    - 0
+  logger:
+      # Logger to save the logs, configs, hyperparameters and checkpoints
+      class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        # Save path
+        save_dir: log
+        # Sub-path of the save path
+        name: passt_esas_train
+  callbacks:
+      # Show epoch instead of step on tensor board
+    - class_path: util.callback.OverrideEpochStepCallback
+      # Show model profile before training start
+    - class_path: util.callback.PrintAndLogModelProfile
+      # Monitor learning rate on tensor board
+    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+      init_args:
+        logging_interval: epoch
+      # Save the best model with highest validation accuracy
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        save_top_k: 1
+        monitor: val_acc_scene
+        mode: max
+        filename: '{epoch}-{val_acc_scene:.4f}'
+  # Max training epochs
+  max_epochs: 13
+
+ckpt_path: null
+
+model:
+  class_path: model.lit_model.LitAcousticClassificationSystem
+  init_args:
+    backbone:
+      class_path: model.backbone.LitPaSST
+      init_args:
+        pretrained: true
+        num_classes: 13
+    # Set to ``null`` if not applied
+    data_augmentation:
+      mix_up:
+        class_path: util.data_augmentation.MixUpMultiLabels
+        init_args:
+          alpha: 0.3
+      mix_style:
+        class_path: util.data_augmentation.FreqMixStyle
+        init_args:
+          alpha: 0.4
+          p: 0.4
+    class_label: scene
+    spec_extractor:
+      class_path: util.spec_extractor.PaSSTMel
+      init_args:
+        n_mels: 128
+        sr: &sr 32000
+        freqm: 0
+        timem: 0
+
+data:
+  # Wrapped data module of train, valid, test DataLoaders
+  class_path: data.data_module_esas.ESASDataModule
+  init_args:
+    audio_dir: ../dataset
+    meta_dir: data/meta_esas_0228
+    batch_size: 64
+    num_workers: 4
+    pin_memory: false
+    clip_len: 10
+    sampling_rate: *sr
+    train_subset: Train
+    valid_subset: Val
+
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 0.00001
+
+lr_scheduler:
+  # Exponentially increase the learning rate as a warmup, then linearly decrease to a minimum rate of peak value.
+  # All credit goes to https://github.com/fschmid56/cpjku_dcase23/blob/main/helpers/lr_schedule.py
+  # Check the documentation for more details in util/lr_scheduler.py
+  class_path: util.lr_scheduler.ExpWarmupLinearDown
+  init_args:
+    warmup_len: 3
+    down_len: 10
+    down_start: 3
+    min_lr: 0.01
