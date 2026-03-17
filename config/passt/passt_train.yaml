@@ -1,8 +1,6 @@
-#### Train TF-SepNet for multitasks ####
+#### Finetune pre-trained PaSST on ESAS ####
 
 trainer:
-  devices:
-    - 0
   logger:
       # Logger to save the logs, configs, hyperparameters and checkpoints
       class_path: lightning.pytorch.loggers.TensorBoardLogger
@@ -10,7 +8,7 @@ trainer:
         # Save path
         save_dir: log
         # Sub-path of the save path
-        name: passt_esas_train
+        name: passt_train
   callbacks:
       # Show epoch instead of step on tensor board
     - class_path: util.callback.OverrideEpochStepCallback
@@ -64,8 +62,8 @@ data:
   # Wrapped data module of train, valid, test DataLoaders
   class_path: data.data_module_esas.ESASDataModule
   init_args:
-    audio_dir: ../dataset
-    meta_dir: data/meta_esas_0228
+    audio_dir: .../esas_data
+    meta_dir: .../esas_metadata
     batch_size: 64
     num_workers: 4
     pin_memory: false
