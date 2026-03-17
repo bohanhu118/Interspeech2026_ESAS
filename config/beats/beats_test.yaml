@@ -19,7 +19,7 @@ trainer:
         name: beats_test
         version: version_0
 
-ckpt_path: /home/cyq/ERAT-ESAS/log/beats_esas_train/version_0/checkpoints/epoch=5-val_acc_scene=0.8430.ckpt
+ckpt_path: null
 
 model:
   class_path: model.lit_model.LitAcousticClassificationSystem
