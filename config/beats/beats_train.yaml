@@ -1,8 +1,6 @@
 ### Finetune both encoder and classifier of pretrained BEATs ###
 
 trainer:
-#  devices:
-#    - 1
   logger:
       # Logger to save the logs, configs, hyperparameters and checkpoints
       class_path: lightning.pytorch.loggers.TensorBoardLogger
@@ -10,7 +8,7 @@ trainer:
         # Save path
         save_dir: log
         # Sub-path of the save path
-        name: beats_esas_train
+        name: beats_train
   callbacks:
       # Show epoch instead of step on tensor board
     - class_path: util.callback.OverrideEpochStepCallback
@@ -51,16 +49,6 @@ model:
         init_args:
           alpha: 0.4
           p: 0.4
-#      dir_aug:
-#        class_path: util.data_augmentation.DeviceImpulseResponseAugmentation
-#        init_args:
-#          path_ir: ../microphone_impulse_response
-#          p: 0.6
-#      spec_aug:
-#        class_path: util.data_augmentation.SpecAugmentation
-#        init_args:
-#          mask_size: 0.2
-#          p: 1.0
     class_label: scene
     spec_extractor:
       class_path: util.spec_extractor.BEATsMel
@@ -72,8 +60,8 @@ data:
   # Wrapped data module of train, valid, test DataLoaders
   class_path: data.data_module_esas.ESASDataModule
   init_args:
-    audio_dir: ../../../share/cyq/dataset
-    meta_dir: data/meta_esas_0228
+    audio_dir: ../esas_data
+    meta_dir: ../esas_metadata
     batch_size: 64
     num_workers: 4
     pin_memory: false
