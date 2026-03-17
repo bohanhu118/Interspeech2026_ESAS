@@ -1,9 +1,7 @@
-### Test TF-SepNet on test set ###
+### Test BEATs on test set ###
 # Normally only need to change `ckpt_path`
 
 trainer:
-#  devices:
-#    - 1
   callbacks:
     # Show model profile before training start
     - class_path: util.callback.PrintAndLogModelProfile
@@ -18,7 +16,7 @@ trainer:
         # Save path
         save_dir: log
         # Sub-path of the save path
-        name: beats_esas_test
+        name: beats_test
         version: version_0
 
 ckpt_path: /home/cyq/ERAT-ESAS/log/beats_esas_train/version_0/checkpoints/epoch=5-val_acc_scene=0.8430.ckpt
@@ -42,8 +40,8 @@ data:
   # Wrapped data module of train, valid, test DataLoaders
   class_path: data.data_module_esas.ESASDataModule
   init_args:
-    audio_dir: ../../../share/cyq/dataset
-    meta_dir: data/meta_esas_0228
+    audio_dir: .../esas_data
+    meta_dir: .../esas_metadata
     batch_size: 64
     num_workers: 4
     pin_memory: false
